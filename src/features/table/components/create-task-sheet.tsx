@@ -19,7 +19,7 @@ import {
 } from "@/components/ui/sheet";
 
 import type { CreateTaskSchema } from "@/features/table/lib/validations";
-import { createTaskSchema } from "@/features/table/lidations";
+import { createTaskSchema } from "@/features/table/lib/validations";
 import { TaskForm } from "./task-form";
 
 function createTask(input: CreateTaskSchema) {

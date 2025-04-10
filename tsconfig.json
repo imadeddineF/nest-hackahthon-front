@@ -19,7 +19,8 @@
 		],
 		"paths": {
 			"@/*": ["./src/*"]
-		}
+		},
+		"types": ["@react-three/fiber", "@react-three/drei", "three"]
 	},
 	"rules": {
 		"@typescript-eslint/explicit-function-return-type": "off",

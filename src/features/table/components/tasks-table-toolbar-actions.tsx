@@ -5,10 +5,10 @@ import type { Table } from "@tanstack/react-table";
 import { Download } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import { exportTableToCSV } from "@/features/table/port";
 
 import { CreateTaskSheet } from "./create-task-sheet";
 import { DeleteTasksDialog } from "./delete-tasks-dialog";
+import { exportTableToCSV } from "../lib/export";
 
 interface TasksTableToolbarActionsProps {
 	table: Table<Task>;

@@ -70,6 +70,7 @@ import type {
 	FilterOperator,
 	JoinOperator,
 } from "@/features/table/types/data-table";
+import type { Option } from "@/features/table/types/data-table";
 
 const FILTERS_KEY = "filters";
 const JOIN_OPERATOR_KEY = "joinOperator";
@@ -77,6 +78,8 @@ const DEBOUNCE_MS = 300;
 const THROTTLE_MS = 50;
 const OPEN_MENU_SHORTCUT = "f";
 const REMOVE_FILTER_SHORTCUTS = ["backspace", "delete"];
+
+type FilterValue = string | string[] | undefined;
 
 interface DataTableFilterListProps<TData>
 	extends React.ComponentProps<typeof PopoverContent> {
@@ -600,6 +603,10 @@ function onFilterInputRender<TData>({
 		);
 	}
 
+	const handleValueChange = (value: FilterValue) => {
+		onFilterUpdate(filter.filterId, { value });
+	};
+
 	switch (filter.variant) {
 		case "text":
 		case "number":
@@ -635,7 +642,7 @@ function onFilterInputRender<TData>({
 					}
 					onChange={(event) =>
 						onFilterUpdate(filter.filterId, {
-							value: event.target.value,
+							value: event.target.value as string,
 						})
 					}
 				/>
@@ -651,8 +658,8 @@ function onFilterInputRender<TData>({
 				<Select
 					open={showValueSelector}
 					onOpenChange={setShowValueSelector}
-					value={filter.value}
-					onValueChange={(value) =>
+					value={typeof filter.value === "string" ? filter.value : undefined}
+					onValueChange={(value: string) =>
 						onFilterUpdate(filter.filterId, {
 							value,
 						})
@@ -664,7 +671,9 @@ function onFilterInputRender<TData>({
 						aria-label={`${columnMeta?.label} boolean filter`}
 						className="h-8 w-full rounded [&[data-size]]:h-8"
 					>
-						<SelectValue placeholder={filter.value ? "True" : "False"} />
+						<SelectValue
+							placeholder={filter.value === "true" ? "True" : "False"}
+						/>
 					</SelectTrigger>
 					<SelectContent id={inputListboxId}>
 						<SelectItem value="true">True</SelectItem>
@@ -732,7 +741,11 @@ function onFilterInputRender<TData>({
 							<FacetedGroup>
 								{columnMeta?.options?.map((option) => (
 									<FacetedItem key={option.value} value={option.value}>
-										{option.icon && <option.icon />}
+										{option.icon && (
+											<span className="mr-2">
+												{React.createElement(option.icon)}
+											</span>
+										)}
 										<span>{option.label}</span>
 										{option.count && (
 											<span className="ml-auto font-mono text-xs">

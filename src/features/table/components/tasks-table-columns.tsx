@@ -132,7 +132,10 @@ export function getTasksTableColumns({
 
 				return (
 					<Badge variant="outline" className="py-1 [&>svg]:size-3.5">
-						<Icon />
+						{/* <Icon /> */}
+						{React.createElement(Icon, {
+							className: "size-4",
+						})}
 						<span className="capitalize">{status}</span>
 					</Badge>
 				);
@@ -167,7 +170,10 @@ export function getTasksTableColumns({
 
 				return (
 					<Badge variant="outline" className="py-1 [&>svg]:size-3.5">
-						<Icon />
+						{React.createElement(Icon, {
+							className: "size-4",
+						})}
+						{/* <Icon /> */}
 						<span className="capitalize">{priority}</span>
 					</Badge>
 				);

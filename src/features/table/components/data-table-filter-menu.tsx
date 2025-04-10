@@ -130,8 +130,9 @@ export function DataTableFilterMenu<TData>({
 				return;
 			}
 
-			const filterValue =
-				column.columnDef.meta?.variant === "multiSelect" ? [value] : value;
+			const filterValue = (
+				column.columnDef.meta?.variant === "multiSelect" ? [value] : value
+			) as string | string[];
 
 			const newFilter: ExtendedColumnFilter<TData> = {
 				id: column.id as Extract<keyof TData, string>,
@@ -559,7 +560,9 @@ function FilterValueSelector<TData>({
 							value={option.value}
 							onSelect={() => onSelect(option.value)}
 						>
-							{option.icon && <option.icon />}
+							{option.icon && (
+								<span className="mr-2">{React.createElement(option.icon)}</span>
+							)}
 							<span className="truncate">{option.label}</span>
 							{option.count && (
 								<span className="ml-auto font-mono text-xs">
@@ -674,7 +677,7 @@ function onFilterInputRender<TData>({
 					defaultValue={typeof filter.value === "string" ? filter.value : ""}
 					onChange={(event) =>
 						onFilterUpdate(filter.filterId, {
-							value: event.target.value,
+							value: event.target.value as string,
 						})
 					}
 				/>
@@ -689,8 +692,12 @@ function onFilterInputRender<TData>({
 					open={showValueSelector}
 					onOpenChange={setShowValueSelector}
 					value={typeof filter.value === "string" ? filter.value : "true"}
-					onValueChange={(value: "true" | "false") =>
-						onFilterUpdate(filter.filterId, { value })
+					onValueChange={(
+						value: "true" | "false" // Explicit type
+					) =>
+						onFilterUpdate(filter.filterId, {
+							value: value as string,
+						})
 					}
 				>
 					<SelectTrigger
@@ -746,7 +753,7 @@ function onFilterInputRender<TData>({
 													key={selectedOption.value}
 													className="rounded-full border bg-background p-0.5"
 												>
-													<selectedOption.icon className="size-3.5" />
+													{React.createElement(selectedOption.icon)}
 												</div>
 											) : null
 										)}
@@ -780,11 +787,17 @@ function onFilterInputRender<TData>({
 														? selectedValues.includes(option.value)
 															? selectedValues.filter((v) => v !== option.value)
 															: [...selectedValues, option.value]
-														: option.value;
-												onFilterUpdate(filter.filterId, { value });
+														: [option.value];
+												onFilterUpdate(filter.filterId, {
+													value: value.filter(Boolean) as string[],
+												});
 											}}
 										>
-											{option.icon && <option.icon />}
+											{option.icon && (
+												<span className="mr-2">
+													{React.createElement(option.icon)}
+												</span>
+											)}
 											<span className="truncate">{option.label}</span>
 											{filter.variant === "multiSelect" && (
 												<Check
@@ -860,6 +873,7 @@ function onFilterInputRender<TData>({
 												to: new Date(),
 										  }
 								}
+								// Update the value assignment in the Calendar component:
 								onSelect={(date) => {
 									onFilterUpdate(filter.filterId, {
 										value: date
@@ -867,7 +881,7 @@ function onFilterInputRender<TData>({
 													(date.from?.getTime() ?? "").toString(),
 													(date.to?.getTime() ?? "").toString(),
 											  ]
-											: [],
+											: ([] as string[]), // Add type assertion here
 									});
 								}}
 							/>

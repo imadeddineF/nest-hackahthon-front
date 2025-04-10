@@ -160,43 +160,40 @@ function SimpleRobotModel({ type }: { type: string }) {
 			</mesh>
 
 			{/* Wheels */}
-			<mesh position={[0.8, -0.25, 0.7]} castShadow>
-				<cylinderGeometry
-					args={[0.3, 0.3, 0.2, 16]}
-					rotation={[Math.PI / 2, 0, 0]}
-				/>
+			{/* Wheels */}
+			<mesh
+				position={[0.8, -0.25, 0.7]}
+				rotation={[Math.PI / 2, 0, 0]}
+				castShadow
+			>
+				<cylinderGeometry args={[0.3, 0.3, 0.2, 16]} />
 				<meshStandardMaterial color="#333" />
 			</mesh>
-			<mesh position={[-0.8, -0.25, 0.7]} castShadow>
-				<cylinderGeometry
-					args={[0.3, 0.3, 0.2, 16]}
-					rotation={[Math.PI / 2, 0, 0]}
-				/>
+			<mesh
+				position={[-0.8, -0.25, 0.7]}
+				rotation={[Math.PI / 2, 0, 0]}
+				castShadow
+			>
+				<cylinderGeometry args={[0.3, 0.3, 0.2, 16]} />
 				<meshStandardMaterial color="#333" />
 			</mesh>
-			<mesh position={[0.8, -0.25, -0.7]} castShadow>
-				<cylinderGeometry
-					args={[0.3, 0.3, 0.2, 16]}
-					rotation={[Math.PI / 2, 0, 0]}
-				/>
-				<meshStandardMaterial color="#333" />
-			</mesh>
-			<mesh position={[-0.8, -0.25, -0.7]} castShadow>
-				<cylinderGeometry
-					args={[0.3, 0.3, 0.2, 16]}
-					rotation={[Math.PI / 2, 0, 0]}
-				/>
+			<mesh
+				position={[0.8, -0.25, -0.7]}
+				rotation={[Math.PI / 2, 0, 0]}
+				castShadow
+			>
+				<cylinderGeometry args={[0.3, 0.3, 0.2, 16]} />
 				<meshStandardMaterial color="#333" />
 			</mesh>
 
 			{/* Sensor or light on top */}
-			<mesh position={[0, 0.8, 0.5]} castShadow>
-				<sphereGeometry args={[0.2, 16, 16]} />
-				<meshStandardMaterial
-					color={type === "heavy-duty" ? "#ff4040" : "#40ff40"}
-					emissive={type === "heavy-duty" ? "#ff0000" : "#00ff00"}
-					emissiveIntensity={0.5}
-				/>
+			<mesh
+				position={[-0.8, -0.25, -0.7]}
+				rotation={[Math.PI / 2, 0, 0]}
+				castShadow
+			>
+				<cylinderGeometry args={[0.3, 0.3, 0.2, 16]} />
+				<meshStandardMaterial color="#333" />
 			</mesh>
 		</group>
 	);

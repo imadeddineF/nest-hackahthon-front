@@ -33,10 +33,13 @@ export interface ExtendedColumnSort<TData> extends Omit<ColumnSort, "id"> {
 	id: Extract<keyof TData, string>;
 }
 
-export interface ExtendedColumnFilter<TData> extends FilterItemSchema {
-	[x: string]: string;
+export type ExtendedColumnFilter<TData> = {
 	id: Extract<keyof TData, string>;
-}
+	value: string | string[] | undefined;
+	variant: FilterVariant;
+	operator: FilterOperator;
+	filterId: string;
+};
 
 export interface DataTableRowAction<TData> {
 	row: Row<TData>;

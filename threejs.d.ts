@@ -1,21 +1,16 @@
-import { ReactThreeFiber } from "@react-three/fiber";
-import { OrbitControls } from "three-stdlib";
+/// <reference types="@react-three/fiber" />
 
-declare global {
-	namespace JSX {
-		interface IntrinsicElements {
-			ambientLight: ReactThreeFiber.LightProps;
-			directionalLight: ReactThreeFiber.LightProps;
-			mesh: ReactThreeFiber.MeshProps;
-			boxGeometry: ReactThreeFiber.BufferGeometryProps;
-			planeGeometry: ReactThreeFiber.BufferGeometryProps;
-			sphereGeometry: ReactThreeFiber.BufferGeometryProps;
-			cylinderGeometry: ReactThreeFiber.BufferGeometryProps;
-			ringGeometry: ReactThreeFiber.BufferGeometryProps;
-			meshStandardMaterial: ReactThreeFiber.MeshStandardMaterialProps;
-			meshBasicMaterial: ReactThreeFiber.MeshBasicMaterialProps;
-			orbitControls: ReactThreeFiber.OrbitControlsProps;
-			group: ReactThreeFiber.GroupProps;
-		}
+declare namespace JSX {
+	interface IntrinsicElements {
+		ambientLight: ReactThreeFiber.Object3DNode<
+			THREE.AmbientLight,
+			typeof THREE.AmbientLight
+		>;
+		directionalLight: ReactThreeFiber.Object3DNode<
+			THREE.DirectionalLight,
+			typeof THREE.DirectionalLight
+		>;
+		mesh: ReactThreeFiber.Object3DNode<THREE.Mesh, typeof THREE.Mesh>;
+		// Add other Three.js elements you use
 	}
 }
