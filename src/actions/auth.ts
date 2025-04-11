@@ -7,7 +7,7 @@ import { redirect } from "next/navigation";
 const baseurl = "auth";
 
 export async function apiLoginHandler(email: string, password: string) {
-	const cookieStore = cookies();
+	const cookieStore = await cookies();
 
 	try {
 		const response = await CustomAxios(`${baseurl}/login`, "POST", {
@@ -41,7 +41,7 @@ export async function apiRegisterHandler(
 	formData: FormData,
 	inviteToken?: string
 ) {
-	const cookieStore = cookies();
+	const cookieStore = await cookies();
 
 	try {
 		const response = await CustomAxios(`${baseurl}/register`, "POST", formData);
@@ -71,7 +71,7 @@ export async function apiRegisterHandler(
 }
 
 export async function apiLogoutHandler() {
-	const cookieStore = cookies();
+	const cookieStore = await cookies();
 
 	try {
 		cookieStore.delete("userId");

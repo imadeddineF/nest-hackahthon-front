@@ -29,7 +29,7 @@ export default async function RootLayout({
 }>) {
 	return (
 		<ViewTransitions>
-			<html>
+			<html lang="en">
 				<body className={`${DMSans.variable} ${DMMono.variable} antialiased`}>
 					<ThemeProvider
 						attribute="class"
