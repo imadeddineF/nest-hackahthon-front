@@ -87,7 +87,7 @@
   "resolutions": {
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "three": "^0.157.0",
+    "three": "^0.175.0",
     "@types/react": "19.1.0",
     "@types/react-dom": "19.1.2"
   }

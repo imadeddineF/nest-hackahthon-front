@@ -7,8 +7,9 @@ export default async function OverviewLayout({
 }>) {
 	return (
 		<main className="h-screen">
-			<Header />
-			<div className="border-2 w-full h-full mt-3">{children}</div>
+			{/* <Header /> */}
+			{/* <div className="border-2 w-full h-full mt-3">{children}</div> */}
+			{children}
 		</main>
 	);
 }

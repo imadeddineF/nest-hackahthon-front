@@ -14,7 +14,7 @@ async function Users(props: IndexPageProps) {
 	const searchParams = await props.searchParams;
 
 	return (
-		<div className="h-full">
+		<div className="h-full w-full">
 			{/* <Table searchParams={searchParams} /> */}
 			<WarehouseVisualization />
 		</div>

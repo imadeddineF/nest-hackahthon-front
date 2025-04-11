@@ -3,8 +3,21 @@
 import { CustomAxios } from "@/utils/customAxios";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+import { AxiosError } from "axios";
 
 const baseurl = "auth";
+
+interface ApiErrorResponse {
+	error: string;
+	translatedError: string;
+	code: string;
+}
+
+interface ApiError {
+	response?: {
+		data?: ApiErrorResponse;
+	};
+}
 
 export async function apiLoginHandler(email: string, password: string) {
 	const cookieStore = await cookies();
@@ -22,16 +35,14 @@ export async function apiLoginHandler(email: string, password: string) {
 			console.log("response.data: ", response.data);
 			redirect("/dashboard");
 		}
-	} catch (error: any) {
-		if (
-			error.response &&
-			error.response.data &&
-			error.response.data.translatedError
-		) {
+	} catch (error) {
+		const axiosError = error as AxiosError<ApiError>;
+		const errorData = axiosError.response?.data as ApiErrorResponse | undefined;
+		if (errorData) {
 			throw {
-				message: error.response.data.error,
-				TranslatedMessage: error.response.data.translatedError,
-				errorCode: error.response.data.code,
+				message: errorData.error,
+				TranslatedMessage: errorData.translatedError,
+				errorCode: errorData.code,
 			};
 		}
 	}
@@ -39,7 +50,7 @@ export async function apiLoginHandler(email: string, password: string) {
 
 export async function apiRegisterHandler(
 	formData: FormData,
-	inviteToken?: string
+	_inviteToken?: string
 ) {
 	const cookieStore = await cookies();
 
@@ -55,16 +66,14 @@ export async function apiRegisterHandler(
 
 			redirect("/dashboard");
 		}
-	} catch (error: any) {
-		if (
-			error.response &&
-			error.response.data &&
-			error.response.data.translatedError
-		) {
+	} catch (error) {
+		const axiosError = error as AxiosError<ApiError>;
+		const errorData = axiosError.response?.data as ApiErrorResponse | undefined;
+		if (errorData) {
 			throw {
-				message: error.response.data.error,
-				TranslatedMessage: error.response.data.translatedError,
-				errorCode: error.response.data.code,
+				message: errorData.error,
+				TranslatedMessage: errorData.translatedError,
+				errorCode: errorData.code,
 			};
 		}
 	}
@@ -76,19 +85,15 @@ export async function apiLogoutHandler() {
 	try {
 		cookieStore.delete("userId");
 		cookieStore.delete("auth_token");
-		// return Promise.resolve("success");
-
 		redirect("/login");
-	} catch (error: any) {
-		if (
-			error.response &&
-			error.response.data &&
-			error.response.data.translatedError
-		) {
+	} catch (error) {
+		const axiosError = error as AxiosError<ApiError>;
+		const errorData = axiosError.response?.data as ApiErrorResponse | undefined;
+		if (errorData) {
 			throw {
-				message: error.response.data.error,
-				TranslatedMessage: error.response.data.translatedError,
-				errorCode: error.response.data.code,
+				message: errorData.error,
+				TranslatedMessage: errorData.translatedError,
+				errorCode: errorData.code,
 			};
 		}
 	}
