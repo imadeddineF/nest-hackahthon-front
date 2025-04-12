@@ -76,3 +76,30 @@
 		@apply bg-background text-foreground;
 	}
 }
+
+/* Add this to your global CSS file */
+@keyframes tabFadeIn {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
+.tabs-list {
+	position: relative;
+}
+
+.tabs-indicator {
+	position: absolute;
+	height: 2px;
+	bottom: 0;
+	left: 0;
+	background-color: currentColor;
+	transition: transform 250ms ease;
+}
+
+.tab-content-animate {
+	animation: tabFadeIn 0.3s ease;
+}
