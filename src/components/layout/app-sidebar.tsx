@@ -19,8 +19,8 @@ import { usePathname } from "next/navigation";
 
 const data = {
 	user: {
-		name: "shadcn",
-		email: "m@example.com",
+		name: "nest",
+		email: "nest@example.com",
 		avatar: "/avatars/shadcn.jpg",
 	},
 	projects: [
@@ -41,14 +41,14 @@ const data = {
 					title: "One",
 					url: "/dashboard/wirehouses",
 				},
-				{
-					title: "Two",
-					url: "/dashboard/wirehouses/two",
-				},
-				{
-					title: "Three",
-					url: "/dashboard/wirehouses/three",
-				},
+				// {
+				// 	title: "Two",
+				// 	url: "/dashboard/wirehouses/two",
+				// },
+				// {
+				// 	title: "Three",
+				// 	url: "/dashboard/wirehouses/three",
+				// },
 			],
 		},
 	],
