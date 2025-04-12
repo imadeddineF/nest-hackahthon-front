@@ -213,35 +213,21 @@ function WarehouseLayout({
 	const wallHeight = 8;
 	const wallThickness = 0.5;
 
-	// Theme-based materials
-	const wallMaterial = new THREE.MeshStandardMaterial({
-		color: wallColor,
-		metalness: 0.2,
-		roughness: 0.3,
-	});
-
-	const glassMaterial = new THREE.MeshPhysicalMaterial({
-		color: glassColor,
-		metalness: isDarkMode ? 0.5 : 0.9,
-		roughness: 0.1,
-		transparent: true,
-		opacity: isDarkMode ? 0.2 : 0.3,
-		transmission: isDarkMode ? 0.5 : 0.9,
-		clearcoat: 1,
-		clearcoatRoughness: 0.1,
-	});
+	// Define inner path parameters
+	const pathOffset = 2; // Distance from walls
+	const pathWidth = 1; // Width of the path
 
 	return (
 		<group>
 			{/* Outer Walls */}
-			{/* Bottom Wall */}
+			{/* Bottom Wall (at far z) */}
 			<Wall
 				position={[0, wallHeight / 2, offsetZ + warehouseDimensions.height]}
 				size={[warehouseDimensions.width, wallHeight, wallThickness]}
 				materialProps={{ color: wallColor, metalness: 0.2, roughness: 0.3 }}
 			/>
 
-			{/* Top Wall */}
+			{/* Top Wall (at near z) */}
 			<Wall
 				position={[0, wallHeight / 2, offsetZ]}
 				size={[warehouseDimensions.width, wallHeight, wallThickness]}
@@ -270,13 +256,13 @@ function WarehouseLayout({
 				materialProps={{ color: wallColor, metalness: 0.2, roughness: 0.3 }}
 			/>
 
-			{/* Black Paths - based on the exact diagram */}
+			{/* Existing Black Paths */}
 			{/* Vertical path on the left (x=45) */}
 			<mesh
 				rotation={[-Math.PI / 2, 0, 0]}
-				position={[offsetX + 30, 1, offsetZ + 25.8]}
+				position={[offsetX + 30, 1, offsetZ + 23]}
 			>
-				<planeGeometry args={[3, 51.4]} />
+				<planeGeometry args={[0.5, 46]} />
 				<meshStandardMaterial
 					color={pathColor}
 					metalness={0.3}
@@ -289,9 +275,9 @@ function WarehouseLayout({
 			{/* Vertical path on the right (x=90) */}
 			<mesh
 				rotation={[-Math.PI / 2, 0, 0]}
-				position={[offsetX + 75, 1, offsetZ + 25.8]}
+				position={[offsetX + 75, 1, offsetZ + 23]}
 			>
-				<planeGeometry args={[3, 51.5]} />
+				<planeGeometry args={[0.5, 46]} />
 				<meshStandardMaterial
 					color={pathColor}
 					metalness={0.3}
@@ -304,9 +290,9 @@ function WarehouseLayout({
 			{/* Horizontal path in the middle (z=50) */}
 			<mesh
 				rotation={[-Math.PI / 2, 0, 0]}
-				position={[offsetX + 51, 1, offsetZ + 50]}
+				position={[offsetX + 52.5, 1, offsetZ + 46]}
 			>
-				<planeGeometry args={[45, 3]} />
+				<planeGeometry args={[45.5, 0.5]} />
 				<meshStandardMaterial
 					color={pathColor}
 					metalness={0.3}
@@ -319,9 +305,70 @@ function WarehouseLayout({
 			{/* Additional vertical path (x=70) */}
 			<mesh
 				rotation={[-Math.PI / 2, 0, 0]}
-				position={[offsetX + 52.5, 1, offsetZ + 75]}
+				position={[offsetX + 52.5, 1, offsetZ + 73]}
 			>
-				<planeGeometry args={[3, 50]} />
+				<planeGeometry args={[0.5, 53.5]} />
+				<meshStandardMaterial
+					color={pathColor}
+					metalness={0.3}
+					roughness={0.7}
+					emissive={pathColor}
+					emissiveIntensity={0.1}
+				/>
+			</mesh>
+
+			{/* Inner Path Surrounding the Room */}
+			{/* Near Path (along z = offsetZ + pathOffset) */}
+			<mesh position={[0, 1, offsetZ + pathOffset]}>
+				<boxGeometry
+					args={[warehouseDimensions.width - 2 * pathOffset, 0.01, pathWidth]}
+				/>
+				<meshStandardMaterial
+					color={pathColor}
+					metalness={0.3}
+					roughness={0.7}
+					emissive={pathColor}
+					emissiveIntensity={0.1}
+				/>
+			</mesh>
+
+			{/* Far Path (along z = offsetZ + height - pathOffset) */}
+			<mesh
+				position={[0, 1, offsetZ + warehouseDimensions.height - pathOffset]}
+			>
+				<boxGeometry
+					args={[warehouseDimensions.width - 2 * pathOffset, 0.01, pathWidth]}
+				/>
+				<meshStandardMaterial
+					color={pathColor}
+					metalness={0.3}
+					roughness={0.7}
+					emissive={pathColor}
+					emissiveIntensity={0.1}
+				/>
+			</mesh>
+
+			{/* Left Path (along x = offsetX + pathOffset) */}
+			<mesh position={[offsetX + pathOffset, 0.01, 0]}>
+				<boxGeometry
+					args={[pathWidth, 1, warehouseDimensions.height - 2 * pathOffset]}
+				/>
+				<meshStandardMaterial
+					color={pathColor}
+					metalness={0.3}
+					roughness={0.7}
+					emissive={pathColor}
+					emissiveIntensity={0.1}
+				/>
+			</mesh>
+
+			{/* Right Path (along x = offsetX + width - pathOffset) */}
+			<mesh
+				position={[offsetX + warehouseDimensions.width - pathOffset, 0.01, 0]}
+			>
+				<boxGeometry
+					args={[pathWidth, 0.01, warehouseDimensions.height - 2 * pathOffset]}
+				/>
 				<meshStandardMaterial
 					color={pathColor}
 					metalness={0.3}
